@@ -17,7 +17,7 @@ public class Block : MonoBehaviour
     {
         if (transform.position.z == 4)
         {
-            transform.Translate(0, 0, ledge.blockCount * ledge.blockSize * -1);
+            transform.Translate(0, ledge.blockCount * ledge.blockSize * 0.2f, ledge.blockCount * ledge.blockSize * -1);
             Init();
         }
     }

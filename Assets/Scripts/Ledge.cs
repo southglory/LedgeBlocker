@@ -32,7 +32,7 @@ public class Ledge : MonoBehaviour
 
         for (int index = 0; index < blockCount; index++)
         {
-            blocks[index].transform.Translate(0, 0, index * blockSize * -1);
+            blocks[index].transform.Translate(0, index * blockSize * 0.2f, index * blockSize * -1);
             blocks[index].Init();
         }
     }
@@ -50,9 +50,9 @@ public class Ledge : MonoBehaviour
         //transform.position = Vector3.forward  * nextZ;
 
         yield return new WaitForFixedUpdate();
-        transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward * 2f, 1);
+        transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.up * blockSize * -0.2f + Vector3.forward * blockSize * 1f, 1);
 
-        nowBlock = (nowBlock + 1) % blockCount;
+        
     }
 
     public void Select(int selectType)
@@ -61,8 +61,10 @@ public class Ledge : MonoBehaviour
 
         if (result)
         {// 정답
-            GameManager.Success();
+            GameManager.Success(selectType);
             StartCoroutine(Move());
+
+            nowBlock = (nowBlock + 1) % blockCount;
         }
         else
         {// 오답

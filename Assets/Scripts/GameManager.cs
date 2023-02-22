@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    static GameManager instance;
+
     [Header("Time")]
     public static float maxTime = 100f;
     public static float playTime;
@@ -27,7 +29,9 @@ public class GameManager : MonoBehaviour
     public GameObject uiGameStart;
     public GameObject uiNewRecord;
 
-    static GameManager instance;
+    [Header("Effect")]
+    public ParticleSystem particleEffect;
+    public Animator anim;
 
     void Start()
     {
@@ -52,19 +56,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void Success()
+    public static void Success(int selectType)
     {
         hit++;
         combo++;
         score += 1 + (combo * 0.1f);
         playComboTime = 0;
         maxCombo();
+
+        instance.particleEffect.Play();
+        instance.anim.SetTrigger("Hit");
+        SoundManager.PlaySound("Hit"+ selectType);
     }
 
     public static void Fail()
     {
         playTime += 10f;
         combo = 0;
+
+        SoundManager.PlaySound("Fail");
     }
 
     public static void maxCombo()
@@ -115,7 +125,8 @@ public class GameManager : MonoBehaviour
         uiSelect.SetActive(true);
         uiGameStart.SetActive(false);
         instance.StartCoroutine(instance.ComboTime());
-
+        SoundManager.PlaySound("Start");
+        SoundManager.BgmStart();
     }
 
     void GameOver()
@@ -135,6 +146,9 @@ public class GameManager : MonoBehaviour
         {
             uiNewRecord.SetActive(false);
         }
+
+        SoundManager.PlaySound("Over");
+        SoundManager.BgmStop();
     }
 
     public void Retry()
