@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Ledge : MonoBehaviour
 {
     public int blockCount;
     public float blockSize;
-        
+    public int nowBlock;
+
+
     Block[] blocks;
 
     // Start is called before the first frame update
@@ -36,20 +40,31 @@ public class Ledge : MonoBehaviour
 
     IEnumerator Move()
     {
-        float nextZ = transform.position.z + 2;
-        while (transform.position.z < nextZ)
-        {
-            transform.Translate(0, 0, Time.deltaTime * 20f);
-            yield return null;
+        //float nextZ = transform.position.z + 2;
+        //while (transform.position.z < nextZ)
+        //{
+        //    yield return null;
+        //    transform.Translate(0, 0, Time.deltaTime * 15f);
+        //}
 
-        }
+        //transform.position = Vector3.forward  * nextZ;
+        yield return null;
+        transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward * 2f, 1);
 
-        transform.position = Vector3.forward  * nextZ;
+        nowBlock = (nowBlock + 1) % blockCount;
     }
 
-    [ContextMenu("Do Move")]
-    void Select()
+    public void Select(int selectType)
     {
-        StartCoroutine(Move());
+        bool result = blocks[nowBlock].Check(selectType);
+
+        if (result)
+        {// 정답
+            StartCoroutine(Move());
+        }
+        else
+        {// 오답
+
+        }
     }
 }
