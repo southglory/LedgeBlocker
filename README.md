@@ -8,3 +8,4 @@ https://www.youtube.com/live/4JTPXorri18?feature=share
 [20230222] [04:04:40] 1차 게임 완성  
 [20230222] [05:46:10] 2차 게임 완성  
 [20230222] [06:55:55] 3차 게임 완성  
+[20230223] [완성] 업로드 무료 배포 주소 ( https://ramyun.itch.io/ledge-blocker )  
