@@ -11,7 +11,6 @@ public class Block : MonoBehaviour
     void Start()
     {
         ledge = GetComponentInParent<Ledge>();
-        Init();
     }
 
     void LateUpdate()
@@ -23,7 +22,7 @@ public class Block : MonoBehaviour
         }
     }
 
-    void Init()
+    public void Init()
     {
         type = Random.Range(0, 3);
         for (int index = 0; index < characters.Length; index++)
@@ -70,13 +69,13 @@ public class Block : MonoBehaviour
         {
             case 0:
                 forceVec = (Vector3.right + Vector3.up * 2f + Vector3.back * 1f) * 2f;
-                torqueVec = (Vector3.forward + Vector3.down) * 1f;
+                torqueVec = (Vector3.forward + Vector3.down) * 2f;
                 characters[type].AddForce(forceVec, ForceMode.Impulse);
                 characters[type].AddTorque(torqueVec, ForceMode.Impulse);
                 break;
             case 1:
                 forceVec = (Vector3.left + Vector3.up * 2f + Vector3.back * 1f) * 2f;
-                torqueVec = (Vector3.back + Vector3.down) * 1f;
+                torqueVec = (Vector3.back + Vector3.down) * 2f;
                 characters[type].AddForce(forceVec, ForceMode.Impulse);
                 characters[type].AddTorque(torqueVec, ForceMode.Impulse);
 

@@ -17,10 +17,9 @@ public class Ledge : MonoBehaviour
     void Start()
     {
         blocks = GetComponentsInChildren<Block>();
-        Align();
     }
 
-    void Align()
+    public void Align()
     {
         blockCount = blocks.Length;
         if (blockCount == 0 )
@@ -34,6 +33,7 @@ public class Ledge : MonoBehaviour
         for (int index = 0; index < blockCount; index++)
         {
             blocks[index].transform.Translate(0, 0, index * blockSize * -1);
+            blocks[index].Init();
         }
     }
 
@@ -48,7 +48,8 @@ public class Ledge : MonoBehaviour
         //}
 
         //transform.position = Vector3.forward  * nextZ;
-        yield return null;
+
+        yield return new WaitForFixedUpdate();
         transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward * 2f, 1);
 
         nowBlock = (nowBlock + 1) % blockCount;
@@ -60,11 +61,12 @@ public class Ledge : MonoBehaviour
 
         if (result)
         {// 정답
+            GameManager.Success();
             StartCoroutine(Move());
         }
         else
         {// 오답
-
+            GameManager.Fail();
         }
     }
 }
